@@ -23,7 +23,7 @@ ntlm () {
 #Removes machine accounts and gives you the only the NTLM hash.
 #Should be used for cracking
 #option n (for ntlm)
-	grep -v "[]$+*[]" $file | awk -F ' ' '{print $4}' | awk -F ':::' '{print $1}' | cut -d ':' -f 4
+	grep -v "$+*" $file| awk '{print $5}' | grep -v -e 'cbc-md5' -e 'hmac-sha1' | awk -F ':' '/:/ {print $4}'
 }
 
 hashuser () {
@@ -31,7 +31,7 @@ hashuser () {
 #Removes machine accounts and gives you 'hash:user'
 #Should be used for correlating cracked hashes from hashtopolis.
 #option c (for correlate, lame)
-	grep -v "[]$+*[]" $file | awk -F ' ' '{print $4}' | awk -F ':::' '{print $1}' | awk -F : '{print $4,":",$1}' | tr -d ' ' | sed 's/:.*\\/:/'
+	grep -v "$+*" $file | awk '{print $5}' | grep -v -e 'cbc-md5' -e 'hmac-sha1' | cut -d '\' -f 2|  awk -F ':' '/:/ {print $4":"$1}'
 }
 
 userlist () {
@@ -39,7 +39,7 @@ userlist () {
 #Removes machine accounts and only username without domain attached.
 #Should be used for making user lists
 #option l (for list!)
-	grep -v "[]$+*[]" $file | awk -F ' ' '{print $4}' | awk -F ':::' '{print $1}' | awk -F : '{print $1}' | cut -d '\' -f 2
+	grep -v "$+*" $file | awk '{print $5}' | grep -v -e 'cbc-md5' -e 'hmac-sha1' | awk -F ':' '/:/ {print $1}' | cut -d '\' -f 2
 }
 
 all () {
