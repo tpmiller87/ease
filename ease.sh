@@ -37,7 +37,7 @@ hashuser () {
 #Removes machine accounts and gives you 'hash:user'
 #Should be used for correlating cracked hashes from hashtopolis.
 #option c (for correlate, lame)
-	grep -v "$+*" raze.creds.ntds | grep -v -e 'cbc-md5' -e 'hmac-sha1' | cut -d '\' -f 2|  awk -F ':' '/:/ {print $4":"$1}'
+	grep -v "$+*" $file | grep -v -e 'cbc-md5' -e 'hmac-sha1' | cut -d '\' -f 2|  awk -F ':' '/:/ {print $4":"$1}'
 }
 
 userlist () {
